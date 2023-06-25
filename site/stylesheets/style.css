@@ -1,0 +1,16 @@
+body{
+    background-color: #f3f2f2;
+    color: #211f1f;
+    font-style: normal;
+    font-family: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+.fn
+{
+    color: #338cf1;
+    text-decoration: #338cf1 underline;
+}
+
+a {
+    color: inherit;
+}
