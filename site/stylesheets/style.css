@@ -14,3 +14,11 @@ body{
 a {
     color: inherit;
 }
+
+pre{
+    border: 1px solid #111;
+    background-color: bisque;
+    width: fit-content;
+    padding-top: 2em;
+    padding-right: 5em;
+}

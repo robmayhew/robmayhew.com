@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="./patch-to-speech.js"></script>
+    <script type="module"  src="main.js"></script>
+
+    <title>Rob Mayhew - Full Stack Developer</title>
+    <link rel="stylesheet" href="../../stylesheets/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="./patch-to-speech.css" type="text/css" media="screen" charset="utf-8" />
+</head>
+
+<body>
+<div id="page-wrap">
+    <div id="contact-info" class="vcard">
+        <div class="fn">Rob Mayhew | Software Developer</div>
+    </div>
+    <div>
+        <ul><a href="/">Home</a></ul>
+    </div>
+    <div id="body">
+        <div class="window">
+            <header class="toolbar toolbar-header">
+                <div id="renderWord"></div>
+            </header>
+            <div class="window-content" id="dropZone">
+                <div class="pane-group">
+                    <div class="pane">
+                        <textarea class="form-control" id="speechInput"></textarea>
+                    </div>
+                    <div class="pane-sm sidebar">
+                        <div class="btn-group speechCtr">
+                            <button class="btn btn-default" id="speakBtn">Speak</button>
+                            <button class="btn btn-default" id="stopBtn">Stop</button>
+                            <button class="btn btn-default" id="pauseBtn">Pause</button>
+                            <button class="btn btn-default" id="backBtn">&lt;&lt;</button>
+                            <button class="btn btn-default" id="forwardBtn">&gt;&gt;</button>
+                        </div>
+                        <div class="form-group">
+                        <span><label>Rate:</label><input type="range" class="form-control" id="rateRng" min="0" max="6"
+                                                         step="0.01"/></span>
+                            <span><label>Volume:</label><input type="range" class="form-control" id="volumeRng" min="0"
+                                                               max="1" step="0.01"/></span>
+                            <span><label>Pitch:</label><input type="range" class="form-control" id="pitchRng" min="0"
+                                                              max="2" step="0.01"/></span>
+                            <button id="saveSettingsBtn">Save Settings</button>
+                        </div>
+
+                        <label>Timer:</label>
+                        <div class="btn-group">
+                            <button class="btn btn-default" id="oneMinuteTimerBtn">One Minute</button>
+                            <button class="btn btn-default" id="twoMinutesTimerBtn">Two Minutes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+
+
+</div>
+</body>
