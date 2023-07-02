@@ -58,7 +58,7 @@ export class SpeechSystem {
             mon.killed = true;
         }
         this.speechSynthesis.cancel();
-        this.maxWaitForEnd = new Date().getTime() + 2000;
+        this.maxWaitForEnd = new Date().getTime() + 100;
         this.waitForEnd(); // see allHaveEnded
     }
     allHaveEnded() {
