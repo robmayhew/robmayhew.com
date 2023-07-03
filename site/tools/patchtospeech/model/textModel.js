@@ -16,7 +16,7 @@ export class TextModelEventListener {
 export class TextModel {
     constructor() {
         this._lines = [];
-        this._text = "Welcome to the quiet zone. do we do dew.\nLine 2. It was a dark and stormy night";
+        this._text = "Instructions:\n\nLocate Your Patch File: Find the patch file and drop it here.\n\nSpeak!: After your patch file is placed, click on the \"Speak\" button. ";
         this._currentRow = 0;
         this.listeners = [];
     }
