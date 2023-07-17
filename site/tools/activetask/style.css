@@ -1,0 +1,19 @@
+.task
+{
+    border: 1px solid black;
+}
+
+.taskLabel
+{
+    margin-right: 1em;
+}
+.taskTime
+{
+    margin-left: 1em;
+}
+
+.distractedTime
+{
+    color: red;
+    margin-left: 1em;
+}
