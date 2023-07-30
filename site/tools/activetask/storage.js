@@ -27,6 +27,7 @@ export class ActiveTaskStorage {
 
             request.onupgradeneeded = (event) => {
                 this.db = event.target.result;
+                let objectStore = this.db.createObjectStore(this.objectStoreName, {keyPath: "id"});
                 resolve();
             }
         });
