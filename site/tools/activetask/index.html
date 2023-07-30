@@ -7,8 +7,8 @@
 <html>
 <head>
     <title>Rob Mayhew | Software Developer</title>
-    <script src="activetask.js"></script>
-    <link rel="stylesheet" href="../stylesheets/style.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="module" src="activetask.js"></script>
+    <link rel="stylesheet" href="../../stylesheets/style.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
 </head>
 <body>
@@ -22,7 +22,7 @@
         <h1>Active Task</h1>
         <p>Keep focus on what you are working on.</p>
         <div>
-            <label>Current Task</label>
+            <label for="taskName">Current Task</label>
             <input type="text" id="taskName">
             <button id="taskBtn">Start</button>
             <button id="stillWorking">Still working on it.</button>

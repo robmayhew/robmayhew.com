@@ -4,6 +4,8 @@
 * All Rights Reserved
 * ----------------------------------------------
  */
+import {ActiveTask, ActiveTaskStorage} from "./storage.js";
+
 let taskBtn = null;
 let stillWorkingBtn = null;
 let wasDistractedBtn = null;
@@ -18,103 +20,42 @@ function getTime()
     return new Date().getTime();
 }
 
-class ActiveTask
-{
-    constructor() {
-        this.id = 0;
-        this.started = getTime();
-        this.name = null;
-        this.lastCheckin = getTime();
-        this.timeDistracted = 0;
-        this.distracted = false;
-        this.taskLength = 0;
-    }
-
-    stillWorkingAction()
-    {
-        if(this.started <= 0) {
-            console.error("Cannot checkin task that has not started");
-            return;
-        }
-        if(this.distracted)
-        {
-            this.distractedAction();
-            this.distracted = false;
-        }else{
-            let n = getTime();
-            let p = n - this.lastCheckin;
-            this.lastCheckin = n;
-            this.taskLength += p;
-        }
-    }
-
-    distractedAction()
-    {
-        let n = getTime();
-        let p = n - this.lastCheckin;
-        this.distracted = true;
-        this.lastCheckin = n;
-        this.timeDistracted += p;
-    }
-
-    complete()
-    {
-        if(this.started <= 0) {
-            console.error("Cannot complete task that has not started");
-            return;
-        }
-        this.stillWorkingAction()
-    }
-}
-
-class ActiveTaskStorage
-{
-    constructor() {
-        this.currentTask = null;
-        this.nextTaskId = 0;
-        this.savedTasks = [];
-    }
-
-    nextId()
-    {
-        this.nextTaskId++
-        return this.nextTaskId;
-    }
-}
-
 class ActiveTaskController
 {
-    constructor() {
+    constructor(storage) {
         this.taskName = "";
-        this.storage = new ActiveTaskStorage();
+        this.storage = storage;
     }
 
     updateTaskName(name) {
         this.taskName = name;
     }
 
-    clickTaskBtn() {
-        let ct = this.storage.currentTask;
-        if(ct != null) {
-            if(ct.name === this.taskName) {
-                ct.stillWorkingAction();
-                return;
+    async clickTaskBtn() {
+        return new Promise((resolve) => {
+            let ct = this.storage.currentTask;
+            if (ct != null) {
+                if (ct.name === this.taskName) {
+                    ct.stillWorkingAction();
+                    resolve();
+                    return;
+                } else {
+                    ct.complete();
+                    this.storage.addOrUpdate(ct);
+                }
             }
-            else {
-                ct.complete();
-                this.storage.savedTasks.push(ct);
-            }
-        }
-        ct = new ActiveTask();
-        ct.name = this.taskName;
-        ct.id = this.storage.nextId();
-        this.storage.currentTask = ct;
+            ct = new ActiveTask();
+            ct.name = this.taskName;
+            this.storage.currentTask = ct;
+            resolve();
+        });
     }
 
     clickWorkingBtn() {
         const ct = this.storage.currentTask;
         if(!ct)return;
-        ct.stillWorkingAction()
+        ct.stillWorkingAction();
+        this.storage.currentTask = ct;
 
     }
 
@@ -122,14 +63,16 @@ class ActiveTaskController
         const ct = this.storage.currentTask;
         if(!ct)return;
         ct.distractedAction();
+        this.storage.currentTask = ct;
     }
 }
 
-const controller = new ActiveTaskController();
+let controller = null;
 function taskBtnClicked() {
     controller.updateTaskName(taskName.value);
-    controller.clickTaskBtn();
-    renderTaskOutput();
+    controller.clickTaskBtn().then(() => {
+        renderTaskOutput();
+    });
 }
 
 function stillWorkingBtnClicked() {
@@ -148,15 +91,17 @@ function renderTaskOutput() {
     const ot = document.getElementById("taskOutput");
     ot.innerHTML = "";
     const ct = controller.storage.currentTask;
-    if(ct == null) {
-        ot.innerHTML = "No Task";
-        return;
-    }
     const taskDiv = renderTask(ct);
     ot.appendChild(taskDiv);
-    controller.storage.savedTasks.forEach(function (task) {
-        const iTaskDiv = renderTask(task);
-        ot.appendChild(iTaskDiv);
+    controller.storage.readToday().then(result => {
+        if(result.length === 0 && ct == null){
+            ot.innerHTML = "No Task";
+        }
+        for(let t of result) {
+            if(t.id === ct.id)continue;
+            const taskDiv = renderTask(t);
+            ot.appendChild(taskDiv);
+        }
     });
 }
 
@@ -171,21 +116,20 @@ function renderTask(task) {
     time.classList.add("taskTime");
     time.innerHTML = formatMilliseconds(task.taskLength);
     div.appendChild(time);
-    let dtime = document.createElement("span");
-    dtime.classList.add("distractedTime");
-    dtime.innerHTML = formatMilliseconds(task.timeDistracted);
-    div.appendChild(dtime);
+    let timeSpan = document.createElement("span");
+    timeSpan.classList.add("distractedTime");
+    timeSpan.innerHTML = formatMilliseconds(task.timeDistracted);
+    div.appendChild(timeSpan);
     return div;
 }
 
 function formatMilliseconds(ms) {
-    var seconds = Math.floor(ms / 1000);
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
+    let seconds = Math.floor(ms / 1000);
+    let  minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
 
     seconds = seconds % 60;
     minutes = minutes % 60;
-    hours = hours;
 
     // Pad the strings to two digits
     seconds = String(seconds).padStart(2, "0");
@@ -215,21 +159,25 @@ function playReminderSound()
         remindSound.connect(context.destination);
         remindSound.start();
     }
-    setTimeout(playReminderSound,500);;
+    setTimeout(playReminderSound,500);
 }
 
 
 document.addEventListener('DOMContentLoaded',function () {
-    taskBtn  = document.getElementById("taskBtn");
-    stillWorkingBtn = document.getElementById("stillWorking");
-    wasDistractedBtn = document.getElementById("wasDistracted");
-    taskOutput = document.getElementById("taskOutput");
-    taskName = document.getElementById("taskName");
-    document.getElementById("activateReminderTone").addEventListener("click", playReminderSound);
+    let storage = new ActiveTaskStorage();
+    storage.init().then(() =>{
+        controller = new ActiveTaskController(storage);
+        taskBtn  = document.getElementById("taskBtn");
+        stillWorkingBtn = document.getElementById("stillWorking");
+        wasDistractedBtn = document.getElementById("wasDistracted");
+        taskOutput = document.getElementById("taskOutput");
+        taskName = document.getElementById("taskName");
+        document.getElementById("activateReminderTone").addEventListener("click", playReminderSound);
 
 
-    taskBtn.addEventListener("click", taskBtnClicked);
-    stillWorkingBtn.addEventListener("click", stillWorkingBtnClicked);
-    wasDistractedBtn.addEventListener("click", wasDistractedBtnClicked);
-    renderTaskOutput();
+        taskBtn.addEventListener("click", taskBtnClicked);
+        stillWorkingBtn.addEventListener("click", stillWorkingBtnClicked);
+        wasDistractedBtn.addEventListener("click", wasDistractedBtnClicked);
+        renderTaskOutput();
+    });
 });
