@@ -27,7 +27,7 @@ export class ActiveTaskStorage {
 
             request.onupgradeneeded = (event) => {
                 this.db = event.target.result;
-                reject("Upgrade needed");
+                resolve();
             }
         });
     }
