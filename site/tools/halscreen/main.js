@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.statuModels[1].color = 'rgba(21,33,117,0.64)';
     window.statuModels[1].text = 'F L X';
-    window.statuModels[1].secondaryTxt = 'EMAIL BRETT';
+    window.statuModels[1].secondaryTxt = 'NONE';
 
     window.statuModels[2].color = 'rgb(119,7,36)';
     window.statuModels[2].text = 'M E T';
-    window.statuModels[2].secondaryTxt = '14:23';
+    window.statuModels[2].secondaryTxt = 'NONE';
 
     window.statuModels[3].color = 'rgba(6,44,183,0.64)';
     window.statuModels[3].text = 'J R A';
-    window.statuModels[3].secondaryTxt = 'DEV-48321';
+    window.statuModels[3].secondaryTxt = 'NONE';
 
     const mainLoop = new MainLoop();
     requestAnimationFrame(mainLoop.loop);
@@ -48,9 +48,8 @@ document.addEventListener('keyup', function(e) {
         // force to uppercase
         let val = e.key.toUpperCase();
         window.statuModels[editing].secondaryTxt += val;
-    }else{
-
-
+    }else if(e.key === 'Enter'){
+        window.statuModels[editing].editing = false;
     }
 });
 
@@ -68,7 +67,12 @@ document.addEventListener('click', (e) => {
         }else{
             sb.editing = false;
         }
+        if(sb.secondaryTxt == '')
+        {
+           sb.secondaryTxt = 'NONE';
+        }
     }
+
     return true;
 
 
