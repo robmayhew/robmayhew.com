@@ -22,8 +22,8 @@
     <div>
         <ul><a href="/">Home</a></ul>
         <h1>Bash Tips</h1>
-        <div>
-            Create a folder with sub-folders.
+        <div class="tip">
+            <h4>Create a folder with sub-folders.</h4>
             <pre>
                 mkdir -p folder/{sub1,sub2,sub3}
             </pre>
@@ -34,7 +34,13 @@
                       ├── sub2
                       └── sub3
             </pre>
-
+        </div>
+        <div class="tip">
+            <h4>Reduce the size of a png file.</h4>
+            <pre>
+                sips -Z 800 input.png --out output.png
+            </pre>
+            <p>This will reduce the image to 800 px on the longest side.</p>
         </div>
     </div>
 </div>

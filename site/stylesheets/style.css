@@ -15,10 +15,53 @@ a {
     color: inherit;
 }
 
-pre{
-    border: 1px solid #111;
+
+pre {
     background-color: bisque;
-    width: fit-content;
-    padding-top: 2em;
-    padding-right: 5em;
+    color: #232121;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: auto;
+}
+
+pre::-webkit-scrollbar {
+    width: 5px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #2196F3;
+    border-radius: 10px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.tip {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    margin: 20px 0;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tip h4 {
+    margin-top: 0;
+    color: #2196F3;
+}
+
+.tip pre {
+
+    border: 1px solid #ddd;
+
+    padding: 15px;
+    overflow-x: auto;
+    text-align: left; /* Aligns text to the left */
+}
+
+.tip p {
+    margin: 10px 0;
+    font-weight: bold;
 }
