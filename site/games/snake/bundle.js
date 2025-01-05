@@ -205,8 +205,10 @@ var APPLE = new Apple();
 var MAP = new Map();
 var ctx;
 var canvas;
+var neverStarted = true;
 var keyPressed = false;
 function keyPress(key) {
+    neverStarted = false;
     if (SNAKE.gameOver) {
         restart();
     }
@@ -322,7 +324,12 @@ function tick() {
     ctx.strokeRect(0, header, MAP.width * size, MAP.height * size);
     ctx.font = 'bold 12px sans-serif'; // Font style, size, and family
     ctx.fillStyle = 'black'; // Text color
-    if (SNAKE.win) {
+    if (neverStarted) {
+        ctx.strokeText("Press Any ", 10, 50);
+        ctx.strokeText("Direction to ", 10, 70);
+        ctx.strokeText("Start ", 10, 90);
+    }
+    else if (SNAKE.win) {
         ctx.strokeText("YOU WIN!", 10, 50);
     }
     else if (SNAKE.gameOver) {
