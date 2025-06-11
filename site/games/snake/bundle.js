@@ -107,19 +107,19 @@ var Snake = /** @class */ (function () {
             return;
         if (this.waitingDelta.length > 0) {
             var w = this.waitingDelta.shift();
-            if (w == 'w') {
+            if (w == 'w' || w == 'W') {
                 this.dx = 0;
                 this.dy = -1;
             }
-            else if (w == 'a') {
+            else if (w == 'a' || w == 'A') {
                 this.dx = -1;
                 this.dy = 0;
             }
-            else if (w == 's') {
+            else if (w == 's' || w == 'S') {
                 this.dx = 0;
                 this.dy = 1;
             }
-            else if (w == 'd') {
+            else if (w == 'd' || w == 'D') {
                 this.dx = 1;
                 this.dy = 0;
             }
@@ -303,7 +303,7 @@ function resizeCanvas() {
     var header = 20; // Header height
     // Calculate canvas size based on the window dimensions and map size
     var availableWidth = window.innerWidth * .85;
-    var availableHeight = window.innerHeight * .60;
+    var availableHeight = window.innerHeight * .55;
     var gameWidth = MAP.width * size;
     var gameHeight = MAP.height * size + header;
     // Calculate scaling factor to maintain aspect ratio

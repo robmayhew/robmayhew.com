@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .game-container {
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #fff;
+            background-color: #000;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .score {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Space Invaders</h1>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="score">Lives: <span id="lives">3</span></div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="controls">
+            <button onclick="startGame()">Start Game</button>
+            <button onclick="pauseGame()">Pause</button>
+        </div>
+        <div class="instructions">
+            <p>Controls: Arrow keys to move, Spacebar to shoot</p>
+            <p><a href="../index.html">Back to Games</a></p>
+        </div>
+    </div>
+    <script src="space-invaders.js"></script>
+</body>
+</html>
