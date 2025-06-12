@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Cargo Delivery</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #gameCanvas {
+            display: block;
+            cursor: crosshair;
+        }
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 5px;
+            min-width: 200px;
+        }
+        #mission {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .station-indicator {
+            color: #00ff00;
+        }
+        .cargo-indicator {
+            color: #ffff00;
+        }
+        .mission-complete {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .mission-active {
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui">
+            <div>Velocity: <span id="velocity">0.0</span></div>
+            <div>Cargo: <span id="cargo">0</span>/5</div>
+            <div>Credits: <span id="credits">1000</span></div>
+            <div>Fuel: <span id="fuel">100</span>%</div>
+        </div>
+        <div id="mission">
+            <h3>Current Mission</h3>
+            <div id="missionText">Dock with Station Alpha to begin</div>
+            <div id="missionReward"></div>
+        </div>
+        <div id="controls">
+            WASD: Move | Mouse: Look | F: Dock/Undock | R: Refuel
+        </div>
+    </div>
+    <script src="space-cargo.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-Down Racing Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        #gameCanvas {
+            border: 2px solid #333;
+            background: #222;
+        }
+        #ui {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 800px;
+        }
+        #controls {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="ui">
+            <div>Speed: <span id="speed">0</span> mph</div>
+            <div>Fuel: <span id="fuel">100</span>%</div>
+            <div>Score: <span id="score">0</span></div>
+        </div>
+        <div id="controls">
+            Use ARROW KEYS to steer and accelerate/brake
+        </div>
+    </div>
+    <script src="racing.js"></script>
+</body>
+</html>
